@@ -11,20 +11,22 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class JavaQuestionServiceTest {
+class QuestionServiceTest {
 
     @Mock
     private JavaQuestionRepository repositoryMock;
     @InjectMocks
-    private JavaQuestionServiceImpl out;
+    private JavaQuestionService out;
 
-    private Collection<JavaQuestion> questionCollection = new ArrayList<>();
+    private Set<JavaQuestion> questionCollection = new HashSet<>();
 
     @BeforeEach
     void setUp() {

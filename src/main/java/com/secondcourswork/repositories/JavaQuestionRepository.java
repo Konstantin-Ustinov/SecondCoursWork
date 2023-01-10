@@ -4,19 +4,16 @@ import com.secondcourswork.entities.JavaQuestion;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Repository
 @Scope("singleton")
 public class JavaQuestionRepository {
 
-    private List<JavaQuestion> javaQuestions;
+    private Set<JavaQuestion> javaQuestions;
 
     public JavaQuestionRepository() {
-        this.javaQuestions = new ArrayList<>();
+        this.javaQuestions = new HashSet<>();
     }
 
     public boolean add(JavaQuestion newItem) {
@@ -27,23 +24,8 @@ public class JavaQuestionRepository {
         return javaQuestions.remove(item);
     }
 
-    public Collection<JavaQuestion> getAll() {
-        return List.copyOf(javaQuestions);
+    public Set<JavaQuestion> getAll() {
+        return Set.copyOf(javaQuestions);
     }
 
-    public JavaQuestion getQuestion(int index) {
-        return javaQuestions.get(index);
-    }
-
-    public Collection<JavaQuestion> getRandomQuestions(int amount) {
-        Collection<JavaQuestion> questions = new ArrayList<>();
-        Random random = new Random();
-        while (questions.size() < amount) {
-            JavaQuestion question = getQuestion(random.nextInt(javaQuestions.size()));
-            if (!questions.contains(question)) {
-                questions.add(question);
-            }
-        }
-        return questions;
-    }
 }

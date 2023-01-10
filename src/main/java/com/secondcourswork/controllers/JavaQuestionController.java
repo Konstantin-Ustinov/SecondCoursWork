@@ -1,31 +1,32 @@
 package com.secondcourswork.controllers;
 
 import com.secondcourswork.entities.JavaQuestion;
-import com.secondcourswork.services.JavaQuestionServiceImpl;
+import com.secondcourswork.services.JavaQuestionService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
+import java.util.Set;
 
 @RestController
 public class JavaQuestionController {
 
-    JavaQuestionServiceImpl service;
+    private JavaQuestionService service;
 
-    public JavaQuestionController(JavaQuestionServiceImpl service) {
+    public JavaQuestionController(JavaQuestionService service) {
         this.service = service;
         service.firstFillingQuestions(15);
     }
 
     @GetMapping("/exam/java/getAll/")
-    public Collection<JavaQuestion> getAllQuestions() {
+    public Set<JavaQuestion> getAllQuestions() {
         return service.getAll();
     }
 
     @GetMapping("/exam/java/add")
-    public boolean addQuestion(@RequestParam String question, @RequestParam String answer) {
-        return service.add(question, answer);
+    public boolean addQuestion(@RequestParam String question, String answer) {
+        return answer != null ? service.add(question, answer) : service.add(question, "Empty");
     }
 
     @GetMapping("/exam/java/remove")

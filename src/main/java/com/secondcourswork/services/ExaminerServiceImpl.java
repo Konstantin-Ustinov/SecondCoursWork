@@ -5,13 +5,11 @@ import com.secondcourswork.exceptions.OverAmountException;
 import com.secondcourswork.repositories.JavaQuestionRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService{
-    JavaQuestionRepository repository;
+    private JavaQuestionRepository repository;
 
     public ExaminerServiceImpl(JavaQuestionRepository repository) {
         this.repository = repository;
@@ -19,15 +17,22 @@ public class ExaminerServiceImpl implements ExaminerService{
 
     @Override
     public Collection<JavaQuestion> getQuestions(int amount) throws OverAmountException {
-
-        Collection<JavaQuestion> collection = repository.getAll();
-        int countQuestions = collection.size();
-
-        if (countQuestions >= amount) {
-            return repository.getRandomQuestions(amount);
+        Set<JavaQuestion> set = repository.getAll();
+        if (set.size() >= amount) {
+            Collection<JavaQuestion> questions = new HashSet<>();
+                while (questions.size() < amount) {
+                    questions.add(getRandomQuestion());
+                }
+            return questions;
         } else {
             throw new OverAmountException("BAD_REQUEST");
         }
+    }
 
+    JavaQuestion getRandomQuestion() {
+        Set<JavaQuestion> set = repository.getAll();
+        JavaQuestion[] javaQuestionsArray = set.toArray(new JavaQuestion[set.size()]);
+        Random random = new Random();
+        return javaQuestionsArray[random.nextInt(javaQuestionsArray.length)];
     }
 }

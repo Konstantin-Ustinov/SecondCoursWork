@@ -12,7 +12,7 @@ import java.util.Collection;
 @RestController
 public class ExamController {
 
-    ExaminerServiceImpl service;
+    private ExaminerServiceImpl service;
 
     public ExamController(ExaminerServiceImpl service) {
         this.service = service;
