@@ -42,7 +42,6 @@ class ExaminerServiceTest {
     @Test
     void getQuestions() throws OverAmountException {
         when(repositoryMock.getAll()).thenReturn(questionCollection);
-        when(out.getRandomQuestion()).thenReturn(new JavaQuestion("Question 1", "Answer 1"));
         assertEquals(out.getQuestions(5), questionCollection);
         assertThrows(OverAmountException.class, () -> out.getQuestions(10));
     }
